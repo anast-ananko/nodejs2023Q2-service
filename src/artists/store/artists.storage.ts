@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
 import { ArtistsStore } from '../interfaces/artist-storage.interface';
@@ -6,7 +6,7 @@ import { Artist } from '../interfaces/artist.interface';
 import { CreateArtistDto } from '../dto/create-artist.dto';
 import { UpdateArtistDto } from '../dto/update-artist.dto';
 
-@Injectable()
+@Injectable({ scope: Scope.DEFAULT })
 export class InMemoryArtistsStore implements ArtistsStore {
   private artists: Artist[] = [];
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 
 import { UsersStore } from '../interfaces/user-storage.interface';
@@ -6,7 +6,7 @@ import { User } from '../interfaces/user.interface';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 
-@Injectable()
+@Injectable({ scope: Scope.DEFAULT })
 export class InMemoryUsersStore implements UsersStore {
   private users: User[] = [];
 
