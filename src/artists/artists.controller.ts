@@ -67,7 +67,7 @@ export class ArtistsController {
   @HttpCode(HttpStatus.NO_CONTENT)
   delete(@Param('id') id: string) {
     if (!validate(id)) {
-      throw new BadRequestException('Invalid artistsId');
+      throw new BadRequestException('Invalid artistId');
     }
 
     const artist = this.artistsService.findOne(id);
