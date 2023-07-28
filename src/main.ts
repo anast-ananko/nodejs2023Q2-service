@@ -13,7 +13,7 @@ async function bootstrap() {
   const swaggerFilePath = path.resolve(process.cwd(), 'doc', 'api.yaml');
   const swaggerFileContent = fs.readFileSync(swaggerFilePath, 'utf8');
   const swaggerObject = jsYaml.load(swaggerFileContent);
-  SwaggerModule.setup('/docs', app, swaggerObject);
+  SwaggerModule.setup('/doc', app, swaggerObject);
 
   app.useGlobalPipes(new ValidationPipe());
 
