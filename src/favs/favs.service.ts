@@ -8,10 +8,14 @@ import { InMemoryArtistsStore } from 'src/artists/store/artists.storage';
 @Injectable()
 export class FavsService {
   constructor(
-    @Inject('FavsStore') private favsStorage: InMemoryFavsStore,
-    @Inject('TracksStore') private tracksStorage: InMemoryTracksStore,
-    @Inject('AlbumsStore') private albumsStorage: InMemoryAlbumsStore,
-    @Inject('ArtistsStore') private artistsStorage: InMemoryArtistsStore,
+    @Inject('FavsStore')
+    private favsStorage: InMemoryFavsStore,
+    @Inject('TracksStore')
+    private tracksStorage: InMemoryTracksStore,
+    @Inject('AlbumsStore')
+    private albumsStorage: InMemoryAlbumsStore,
+    @Inject('ArtistsStore')
+    private artistsStorage: InMemoryArtistsStore,
   ) {}
 
   findAll() {

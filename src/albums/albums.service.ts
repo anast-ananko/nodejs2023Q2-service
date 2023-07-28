@@ -4,12 +4,17 @@ import { InMemoryAlbumsStore } from './store/albums.storage';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
+import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 
 @Injectable()
 export class AlbumsService {
   constructor(
-    @Inject('AlbumsStore') private albumsStorage: InMemoryAlbumsStore,
-    @Inject('TracksStore') private tracksStorage: InMemoryTracksStore,
+    @Inject('AlbumsStore')
+    private albumsStorage: InMemoryAlbumsStore,
+    @Inject('TracksStore')
+    private tracksStorage: InMemoryTracksStore,
+    @Inject('FavsStore')
+    private favsStorage: InMemoryFavsStore,
   ) {}
 
   findAll() {
@@ -36,6 +41,8 @@ export class AlbumsService {
       if (track) {
         track.albumId = null;
       }
+
+      this.favsStorage.deleteAlbum(album.id);
     }
   }
 }

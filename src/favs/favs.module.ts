@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 
 import { FavsService } from './favs.service';
 import { InMemoryFavsStore } from './store/favs.storage';
@@ -8,10 +8,20 @@ import { TracksModule } from 'src/tracks/tracks.module';
 import { FavsController } from './favs.controller';
 
 @Module({
-  imports: [TracksModule, AlbumsModule, ArtistsModule],
+  imports: [
+    forwardRef(() => TracksModule),
+    forwardRef(() => AlbumsModule),
+    forwardRef(() => ArtistsModule),
+  ],
   controllers: [FavsController],
   providers: [
     FavsService,
+    {
+      provide: 'FavsStore',
+      useClass: InMemoryFavsStore,
+    },
+  ],
+  exports: [
     {
       provide: 'FavsStore',
       useClass: InMemoryFavsStore,

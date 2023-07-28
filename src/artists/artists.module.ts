@@ -5,9 +5,10 @@ import { ArtistsService } from './artists.service';
 import { InMemoryArtistsStore } from './store/artists.storage';
 import { AlbumsModule } from 'src/albums/albums.module';
 import { TracksModule } from 'src/tracks/tracks.module';
+import { FavsModule } from 'src/favs/favs.module';
 
 @Module({
-  imports: [TracksModule, AlbumsModule],
+  imports: [TracksModule, AlbumsModule, FavsModule],
   controllers: [ArtistsController],
   providers: [
     ArtistsService,

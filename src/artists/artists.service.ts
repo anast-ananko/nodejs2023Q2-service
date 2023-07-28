@@ -5,13 +5,19 @@ import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
 import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
+import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 
 @Injectable()
 export class ArtistsService {
   constructor(
-    @Inject('ArtistsStore') private artistStorage: InMemoryArtistsStore,
-    @Inject('TracksStore') private tracksStorage: InMemoryTracksStore,
-    @Inject('AlbumsStore') private albumsStorage: InMemoryAlbumsStore,
+    @Inject('ArtistsStore')
+    private artistStorage: InMemoryArtistsStore,
+    @Inject('TracksStore')
+    private tracksStorage: InMemoryTracksStore,
+    @Inject('AlbumsStore')
+    private albumsStorage: InMemoryAlbumsStore,
+    @Inject('FavsStore')
+    private favsStorage: InMemoryFavsStore,
   ) {}
 
   findAll() {
@@ -43,6 +49,8 @@ export class ArtistsService {
       if (album) {
         album.artistId = null;
       }
+
+      this.favsStorage.deleteArtist(artist.id);
     }
   }
 }

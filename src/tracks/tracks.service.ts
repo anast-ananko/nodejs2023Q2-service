@@ -3,28 +3,38 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InMemoryTracksStore } from './store/tracks.storage';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
+import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 
 @Injectable()
 export class TracksService {
-  constructor(@Inject('TracksStore') private storage: InMemoryTracksStore) {}
+  constructor(
+    @Inject('TracksStore')
+    private tracksStorage: InMemoryTracksStore,
+    @Inject('FavsStore')
+    private favsStorage: InMemoryFavsStore,
+  ) {}
 
   findAll() {
-    return this.storage.findAll();
+    return this.tracksStorage.findAll();
   }
 
   findOne(id: string) {
-    return this.storage.findById(id);
+    return this.tracksStorage.findById(id);
   }
 
   create(createTrackDto: CreateTrackDto) {
-    return this.storage.create(createTrackDto);
+    return this.tracksStorage.create(createTrackDto);
   }
 
   update(id: string, updateTrackDto: UpdateTrackDto) {
-    return this.storage.update(id, updateTrackDto);
+    return this.tracksStorage.update(id, updateTrackDto);
   }
 
   delete(id: string) {
-    return this.storage.delete(id);
+    const track = this.tracksStorage.delete(id);
+
+    if (track) {
+      this.favsStorage.deleteTrack(track.id);
+    }
   }
 }
