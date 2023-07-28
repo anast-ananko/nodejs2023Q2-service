@@ -18,6 +18,14 @@ export class InMemoryTracksStore implements TracksStore {
     return this.tracks.find((track) => track.id === id);
   }
 
+  findByAlbumId(id: string) {
+    return this.tracks.find((track) => track.albumId === id);
+  }
+
+  findByArtistId(id: string) {
+    return this.tracks.find((track) => track.artistId === id);
+  }
+
   create(dto: CreateTrackDto) {
     const newTrack = {
       id: uuidv4(),

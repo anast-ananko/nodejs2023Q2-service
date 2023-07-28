@@ -18,6 +18,10 @@ export class InMemoryAlbumsStore implements AlbumsStore {
     return this.albums.find((album) => album.id === id);
   }
 
+  findByArtistId(id: string) {
+    return this.albums.find((album) => album.artistId === id);
+  }
+
   create(dto: CreateAlbumDto) {
     const newAlbum = {
       id: uuidv4(),
