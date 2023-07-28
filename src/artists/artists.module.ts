@@ -16,5 +16,11 @@ import { TracksModule } from 'src/tracks/tracks.module';
       useClass: InMemoryArtistsStore,
     },
   ],
+  exports: [
+    {
+      provide: 'ArtistsStore',
+      useClass: InMemoryArtistsStore,
+    },
+  ],
 })
 export class ArtistsModule {}
