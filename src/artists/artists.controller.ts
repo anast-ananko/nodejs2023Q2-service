@@ -8,8 +8,6 @@ import {
   Body,
   BadRequestException,
   NotFoundException,
-  UsePipes,
-  ValidationPipe,
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
@@ -44,7 +42,6 @@ export class ArtistsController {
   }
 
   @Post()
-  @UsePipes(ValidationPipe)
   create(@Body() createArtistDto: CreateArtistDto) {
     return this.artistsService.create(createArtistDto);
   }
