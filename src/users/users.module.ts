@@ -14,4 +14,4 @@ import { InMemoryUsersStore } from './store/users.storage';
     },
   ],
 })
-export class UserModule {}
+export class UsersModule {}

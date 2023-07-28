@@ -14,4 +14,4 @@ import { InMemoryArtistsStore } from './store/artists.storage';
     },
   ],
 })
-export class ArtistModule {}
+export class ArtistsModule {}
