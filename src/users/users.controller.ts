@@ -22,11 +22,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UsersController {
-  constructor(private userService: UsersService) {}
+  constructor(private usersService: UsersService) {}
 
   @Get()
   getAll() {
-    return this.userService.findAll();
+    return this.usersService.findAll();
   }
 
   @Get(':id')
@@ -35,7 +35,7 @@ export class UsersController {
       throw new BadRequestException('Invalid userId');
     }
 
-    const user = this.userService.findOne(id);
+    const user = this.usersService.findOne(id);
 
     if (!user) {
       throw new NotFoundException('User not found');
@@ -47,7 +47,7 @@ export class UsersController {
   @Post()
   @UsePipes(ValidationPipe)
   create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    return this.usersService.create(createUserDto);
   }
 
   @Put(':id')
@@ -56,7 +56,7 @@ export class UsersController {
       throw new BadRequestException('Invalid userId');
     }
 
-    const user = this.userService.findOneWithPassword(id);
+    const user = this.usersService.findOneWithPassword(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -65,7 +65,7 @@ export class UsersController {
       throw new ForbiddenException('Wrong old password');
     }
 
-    return this.userService.update(id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
@@ -75,12 +75,12 @@ export class UsersController {
       throw new BadRequestException('Invalid userId');
     }
 
-    const user = this.userService.findOne(id);
+    const user = this.usersService.findOne(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    this.userService.delete(id);
+    this.usersService.delete(id);
 
     return {
       statusCode: HttpStatus.NO_CONTENT,
