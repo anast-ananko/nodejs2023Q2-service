@@ -4,6 +4,7 @@ import { InMemoryFavsStore } from './store/favs.storage';
 import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
 import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
 import { InMemoryArtistsStore } from 'src/artists/store/artists.storage';
+import { FavsData } from './interfaces/favs.interface';
 
 @Injectable()
 export class FavsService {
@@ -19,15 +20,28 @@ export class FavsService {
   ) {}
 
   findAll() {
-    return this.favsStorage.findAll();
+    const favs = this.favsStorage.findAll();
+    const favsData: FavsData = {
+      artists: [],
+      albums: [],
+      tracks: [],
+    };
+
+    favsData.artists = favs.artists.map((id) =>
+      this.artistsStorage.findById(id),
+    );
+    favsData.albums = favs.albums.map((id) => this.albumsStorage.findById(id));
+    favsData.tracks = favs.tracks.map((id) => this.tracksStorage.findById(id));
+
+    return favsData;
   }
 
   addTrack(id: string) {
     const track = this.tracksStorage.findById(id);
 
     if (track) {
-      this.favsStorage.addTrack(track);
-      return track;
+      this.favsStorage.addTrack(id);
+      return id;
     }
 
     return null;
@@ -38,7 +52,7 @@ export class FavsService {
 
     if (track) {
       this.favsStorage.deleteTrack(id);
-      return track;
+      return id;
     }
 
     return null;
@@ -48,8 +62,8 @@ export class FavsService {
     const album = this.albumsStorage.findById(id);
 
     if (album) {
-      this.favsStorage.addAlbum(album);
-      return album;
+      this.favsStorage.addAlbum(id);
+      return id;
     }
 
     return null;
@@ -60,7 +74,7 @@ export class FavsService {
 
     if (album) {
       this.favsStorage.deleteAlbum(id);
-      return album;
+      return id;
     }
 
     return null;
@@ -70,8 +84,8 @@ export class FavsService {
     const artist = this.artistsStorage.findById(id);
 
     if (artist) {
-      this.favsStorage.addArtist(artist);
-      return artist;
+      this.favsStorage.addArtist(id);
+      return id;
     }
 
     return null;
@@ -82,7 +96,7 @@ export class FavsService {
 
     if (artist) {
       this.favsStorage.deleteArtist(id);
-      return artist;
+      return id;
     }
 
     return null;

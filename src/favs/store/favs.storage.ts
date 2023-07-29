@@ -2,13 +2,10 @@ import { Injectable, Scope } from '@nestjs/common';
 
 import { FavsStore } from '../interfaces/favs-storage.interface';
 import { Favs } from '../interfaces/favs.interface';
-import { Artist } from 'src/artists/interfaces/artist.interface';
-import { Album } from 'src/albums/interfaces/album.interface';
-import { Track } from 'src/tracks/interfaces/track.interface';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class InMemoryFavsStore implements FavsStore {
-  private favs: Favs | null = {
+  private favs: Favs = {
     artists: [],
     albums: [],
     tracks: [],
@@ -18,51 +15,55 @@ export class InMemoryFavsStore implements FavsStore {
     return this.favs;
   }
 
-  addTrack(track: Track) {
-    this.favs.tracks.push(track);
+  addTrack(id: string) {
+    this.favs.tracks.push(id);
   }
 
   deleteTrack(id: string) {
-    const trackIndex = this.favs.tracks.findIndex((track) => track.id === id);
+    const trackIdIndex = this.favs.tracks.findIndex(
+      (trackId) => trackId === id,
+    );
 
-    if (trackIndex !== -1) {
-      const deletedTrack = this.favs.tracks.splice(trackIndex, 1)[0];
+    if (trackIdIndex !== -1) {
+      const deletedTrackId = this.favs.tracks.splice(trackIdIndex, 1)[0];
 
-      return deletedTrack;
+      return deletedTrackId;
     }
 
     return null;
   }
 
-  addAlbum(album: Album) {
-    this.favs.albums.push(album);
+  addAlbum(id: string) {
+    this.favs.albums.push(id);
   }
 
   deleteAlbum(id: string) {
-    const albumIndex = this.favs.albums.findIndex((album) => album.id === id);
+    const albumIdIndex = this.favs.albums.findIndex(
+      (albumId) => albumId === id,
+    );
 
-    if (albumIndex !== -1) {
-      const deletedAlbum = this.favs.albums.splice(albumIndex, 1)[0];
+    if (albumIdIndex !== -1) {
+      const deletedAlbumId = this.favs.albums.splice(albumIdIndex, 1)[0];
 
-      return deletedAlbum;
+      return deletedAlbumId;
     }
 
     return null;
   }
 
-  addArtist(artist: Artist) {
-    this.favs.artists.push(artist);
+  addArtist(id: string) {
+    this.favs.artists.push(id);
   }
 
   deleteArtist(id: string) {
-    const artistIndex = this.favs.artists.findIndex(
-      (artist) => artist.id === id,
+    const artistIdIndex = this.favs.artists.findIndex(
+      (artistId) => artistId === id,
     );
 
-    if (artistIndex !== -1) {
-      const deletedArtist = this.favs.artists.splice(artistIndex, 1)[0];
+    if (artistIdIndex !== -1) {
+      const deletedArtistId = this.favs.artists.splice(artistIdIndex, 1)[0];
 
-      return deletedArtist;
+      return deletedArtistId;
     }
 
     return null;
