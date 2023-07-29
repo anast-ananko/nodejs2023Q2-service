@@ -78,10 +78,5 @@ export class UsersController {
     }
 
     this.usersService.delete(id);
-
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'User deleted successfully',
-    };
   }
 }

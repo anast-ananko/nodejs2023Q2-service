@@ -73,10 +73,5 @@ export class ArtistsController {
     }
 
     this.artistsService.delete(id);
-
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'Artist deleted successfully',
-    };
   }
 }

@@ -73,10 +73,5 @@ export class AlbumsController {
     }
 
     this.albumsService.delete(id);
-
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'Album deleted successfully',
-    };
   }
 }

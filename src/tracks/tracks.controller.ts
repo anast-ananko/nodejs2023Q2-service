@@ -73,10 +73,5 @@ export class TracksController {
     }
 
     this.tracksService.delete(id);
-
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'Track deleted successfully',
-    };
   }
 }

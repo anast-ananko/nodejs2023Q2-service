@@ -47,11 +47,6 @@ export class FavsController {
     if (!track) {
       throw new NotFoundException('Track not found');
     }
-
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'Track deleted successfully',
-    };
   }
 
   @Post('album/:id')
@@ -79,11 +74,6 @@ export class FavsController {
     if (!album) {
       throw new NotFoundException('Album not found');
     }
-
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'Album deleted successfully',
-    };
   }
 
   @Post('artist/:id')
@@ -111,10 +101,5 @@ export class FavsController {
     if (!artist) {
       throw new NotFoundException('Artist not found');
     }
-
-    return {
-      statusCode: HttpStatus.NO_CONTENT,
-      message: 'Artist deleted successfully',
-    };
   }
 }
