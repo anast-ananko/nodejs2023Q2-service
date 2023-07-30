@@ -11,7 +11,9 @@ services:
       - postgres
     networks:
       - server-network  
-    restart: always  
+    restart: always 
+    volumes:
+      - ./src:/app/src 
   postgres:
     container_name: postgres
     build: ./database
