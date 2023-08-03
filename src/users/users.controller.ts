@@ -7,8 +7,6 @@ import {
   Param,
   Body,
   BadRequestException,
-  NotFoundException,
-  ForbiddenException,
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
@@ -33,13 +31,7 @@ export class UsersController {
       throw new BadRequestException('Invalid userId');
     }
 
-    const user = this.usersService.findOne(id);
-
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    return user;
+    return this.usersService.findOne(id);
   }
 
   @Post()
@@ -53,15 +45,6 @@ export class UsersController {
       throw new BadRequestException('Invalid userId');
     }
 
-    const user = this.usersService.findOneWithPassword(id);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    if (updateUserDto.oldPassword !== user.password) {
-      throw new ForbiddenException('Wrong old password');
-    }
-
     return this.usersService.update(id, updateUserDto);
   }
 
@@ -72,11 +55,6 @@ export class UsersController {
       throw new BadRequestException('Invalid userId');
     }
 
-    const user = this.usersService.findOne(id);
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
-    this.usersService.delete(id);
+    return this.usersService.delete(id);
   }
 }

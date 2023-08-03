@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSourceOptions } from 'typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -13,7 +12,7 @@ import { configPostgres } from './typeorm.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(configPostgres as DataSourceOptions),
+    TypeOrmModule.forRoot(configPostgres),
     UsersModule,
     ArtistsModule,
     TracksModule,
