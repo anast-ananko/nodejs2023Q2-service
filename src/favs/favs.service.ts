@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { InMemoryFavsStore } from './store/favs.storage';
-import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
+// import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
 import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
 //import { InMemoryArtistsStore } from 'src/artists/store/artists.storage';
 import { FavsData } from './interfaces/favs.interface';
@@ -12,9 +12,7 @@ export class FavsService {
     @Inject('FavsStore')
     private favsStorage: InMemoryFavsStore,
     @Inject('TracksStore')
-    private tracksStorage: InMemoryTracksStore,
-    @Inject('AlbumsStore')
-    private albumsStorage: InMemoryAlbumsStore, // @Inject('ArtistsStore') // private artistsStorage: InMemoryArtistsStore,
+    private tracksStorage: InMemoryTracksStore, // @Inject('AlbumsStore') // private albumsStorage: InMemoryAlbumsStore, // @Inject('ArtistsStore') // private artistsStorage: InMemoryArtistsStore,
   ) {}
 
   findAll() {
@@ -28,7 +26,7 @@ export class FavsService {
     // favsData.artists = favs.artists.map((id) =>
     //   this.artistsStorage.findById(id),
     // );
-    favsData.albums = favs.albums.map((id) => this.albumsStorage.findById(id));
+    // favsData.albums = favs.albums.map((id) => this.albumsStorage.findById(id));
     favsData.tracks = favs.tracks.map((id) => this.tracksStorage.findById(id));
 
     return favsData;
@@ -56,27 +54,27 @@ export class FavsService {
     return null;
   }
 
-  addAlbum(id: string) {
-    const album = this.albumsStorage.findById(id);
+  // addAlbum(id: string) {
+  //   const album = this.albumsStorage.findById(id);
 
-    if (album) {
-      this.favsStorage.addAlbum(id);
-      return id;
-    }
+  //   if (album) {
+  //     this.favsStorage.addAlbum(id);
+  //     return id;
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
-  deleteAlbum(id: string) {
-    const album = this.albumsStorage.findById(id);
+  // deleteAlbum(id: string) {
+  //   const album = this.albumsStorage.findById(id);
 
-    if (album) {
-      this.favsStorage.deleteAlbum(id);
-      return id;
-    }
+  //   if (album) {
+  //     this.favsStorage.deleteAlbum(id);
+  //     return id;
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
   // addArtist(id: string) {
   //   // const artist = this.artistsStorage.findById(id);

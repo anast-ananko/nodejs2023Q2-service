@@ -49,32 +49,32 @@ export class FavsController {
     }
   }
 
-  @Post('album/:id')
-  @HttpCode(HttpStatus.CREATED)
-  addAlbum(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid albumId');
-    }
+  // @Post('album/:id')
+  // @HttpCode(HttpStatus.CREATED)
+  // addAlbum(@Param('id') id: string) {
+  //   if (!validate(id)) {
+  //     throw new BadRequestException('Invalid albumId');
+  //   }
 
-    const album = this.favsService.addAlbum(id);
+  //   const album = this.favsService.addAlbum(id);
 
-    if (!album) {
-      throw new UnprocessableEntityException('Album not found');
-    }
-  }
+  //   if (!album) {
+  //     throw new UnprocessableEntityException('Album not found');
+  //   }
+  // }
 
-  @Delete('album/:id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  deleteAlbum(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid albumId');
-    }
+  // @Delete('album/:id')
+  // @HttpCode(HttpStatus.NO_CONTENT)
+  // deleteAlbum(@Param('id') id: string) {
+  //   if (!validate(id)) {
+  //     throw new BadRequestException('Invalid albumId');
+  //   }
 
-    const album = this.favsService.deleteAlbum(id);
-    if (!album) {
-      throw new NotFoundException('Album not found');
-    }
-  }
+  //   const album = this.favsService.deleteAlbum(id);
+  //   if (!album) {
+  //     throw new NotFoundException('Album not found');
+  //   }
+  // }
 
   // @Post('artist/:id')
   // @HttpCode(HttpStatus.CREATED)
