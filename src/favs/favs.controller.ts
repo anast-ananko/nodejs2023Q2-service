@@ -76,30 +76,30 @@ export class FavsController {
     }
   }
 
-  @Post('artist/:id')
-  @HttpCode(HttpStatus.CREATED)
-  addArtist(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid artistId');
-    }
+  // @Post('artist/:id')
+  // @HttpCode(HttpStatus.CREATED)
+  // addArtist(@Param('id') id: string) {
+  //   if (!validate(id)) {
+  //     throw new BadRequestException('Invalid artistId');
+  //   }
 
-    const artist = this.favsService.addArtist(id);
+  //   const artist = this.favsService.addArtist(id);
 
-    if (!artist) {
-      throw new UnprocessableEntityException('Artist not found');
-    }
-  }
+  //   if (!artist) {
+  //     throw new UnprocessableEntityException('Artist not found');
+  //   }
+  // }
 
-  @Delete('artist/:id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  deleteArtist(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid artistId');
-    }
+  // @Delete('artist/:id')
+  // @HttpCode(HttpStatus.NO_CONTENT)
+  // deleteArtist(@Param('id') id: string) {
+  //   if (!validate(id)) {
+  //     throw new BadRequestException('Invalid artistId');
+  //   }
 
-    const artist = this.favsService.deleteArtist(id);
-    if (!artist) {
-      throw new NotFoundException('Artist not found');
-    }
-  }
+  //   const artist = this.favsService.deleteArtist(id);
+  //   if (!artist) {
+  //     throw new NotFoundException('Artist not found');
+  //   }
+  // }
 }

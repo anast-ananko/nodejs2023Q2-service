@@ -7,7 +7,6 @@ import {
   Param,
   Body,
   BadRequestException,
-  NotFoundException,
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
@@ -32,13 +31,7 @@ export class ArtistsController {
       throw new BadRequestException('Invalid artistId');
     }
 
-    const artist = this.artistsService.findOne(id);
-
-    if (!artist) {
-      throw new NotFoundException('Artist not found');
-    }
-
-    return artist;
+    return this.artistsService.findOne(id);
   }
 
   @Post()
@@ -52,11 +45,6 @@ export class ArtistsController {
       throw new BadRequestException('Invalid artistId');
     }
 
-    const artist = this.artistsService.findOne(id);
-    if (!artist) {
-      throw new NotFoundException('Artist not found');
-    }
-
     return this.artistsService.update(id, updateArtistDto);
   }
 
@@ -67,11 +55,6 @@ export class ArtistsController {
       throw new BadRequestException('Invalid artistId');
     }
 
-    const artist = this.artistsService.findOne(id);
-    if (!artist) {
-      throw new NotFoundException('Artist not found');
-    }
-
-    this.artistsService.delete(id);
+    return this.artistsService.delete(id);
   }
 }

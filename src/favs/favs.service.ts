@@ -3,7 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InMemoryFavsStore } from './store/favs.storage';
 import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
 import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
-import { InMemoryArtistsStore } from 'src/artists/store/artists.storage';
+//import { InMemoryArtistsStore } from 'src/artists/store/artists.storage';
 import { FavsData } from './interfaces/favs.interface';
 
 @Injectable()
@@ -14,9 +14,7 @@ export class FavsService {
     @Inject('TracksStore')
     private tracksStorage: InMemoryTracksStore,
     @Inject('AlbumsStore')
-    private albumsStorage: InMemoryAlbumsStore,
-    @Inject('ArtistsStore')
-    private artistsStorage: InMemoryArtistsStore,
+    private albumsStorage: InMemoryAlbumsStore, // @Inject('ArtistsStore') // private artistsStorage: InMemoryArtistsStore,
   ) {}
 
   findAll() {
@@ -27,9 +25,9 @@ export class FavsService {
       tracks: [],
     };
 
-    favsData.artists = favs.artists.map((id) =>
-      this.artistsStorage.findById(id),
-    );
+    // favsData.artists = favs.artists.map((id) =>
+    //   this.artistsStorage.findById(id),
+    // );
     favsData.albums = favs.albums.map((id) => this.albumsStorage.findById(id));
     favsData.tracks = favs.tracks.map((id) => this.tracksStorage.findById(id));
 
@@ -80,25 +78,25 @@ export class FavsService {
     return null;
   }
 
-  addArtist(id: string) {
-    const artist = this.artistsStorage.findById(id);
+  // addArtist(id: string) {
+  //   // const artist = this.artistsStorage.findById(id);
 
-    if (artist) {
-      this.favsStorage.addArtist(id);
-      return id;
-    }
+  //   if (artist) {
+  //     this.favsStorage.addArtist(id);
+  //     return id;
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
-  deleteArtist(id: string) {
-    const artist = this.artistsStorage.findById(id);
+  // deleteArtist(id: string) {
+  //   const artist = this.artistsStorage.findById(id);
 
-    if (artist) {
-      this.favsStorage.deleteArtist(id);
-      return id;
-    }
+  //   if (artist) {
+  //     this.favsStorage.deleteArtist(id);
+  //     return id;
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 }

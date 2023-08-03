@@ -1,27 +1,22 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ArtistsController } from './artists.controller';
 import { ArtistsService } from './artists.service';
-import { InMemoryArtistsStore } from './store/artists.storage';
+import { ArtistEntity } from './entities/artist.entity';
 import { AlbumsModule } from 'src/albums/albums.module';
 import { TracksModule } from 'src/tracks/tracks.module';
 import { FavsModule } from 'src/favs/favs.module';
 
 @Module({
-  imports: [TracksModule, AlbumsModule, FavsModule],
+  imports: [
+    TypeOrmModule.forFeature([ArtistEntity]),
+    TracksModule,
+    AlbumsModule,
+    FavsModule,
+  ],
   controllers: [ArtistsController],
-  providers: [
-    ArtistsService,
-    {
-      provide: 'ArtistsStore',
-      useClass: InMemoryArtistsStore,
-    },
-  ],
-  exports: [
-    {
-      provide: 'ArtistsStore',
-      useClass: InMemoryArtistsStore,
-    },
-  ],
+  providers: [ArtistsService],
+  exports: [ArtistsService],
 })
 export class ArtistsModule {}
