@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
-import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
+// import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
 // import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
 import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 import { ArtistEntity } from './entities/artist.entity';
@@ -14,8 +14,8 @@ export class ArtistsService {
   constructor(
     @InjectRepository(ArtistEntity)
     private readonly artistRepository: Repository<ArtistEntity>,
-    @Inject('TracksStore')
-    private tracksStorage: InMemoryTracksStore,
+    // @Inject('TracksStore')
+    // private tracksStorage: InMemoryTracksStore,
     // @Inject('AlbumsStore')
     // private albumsStorage: InMemoryAlbumsStore,
     @Inject('FavsStore')
@@ -59,10 +59,10 @@ export class ArtistsService {
     const artist = await this.findOne(id);
 
     if (artist) {
-      const track = this.tracksStorage.findByArtistId(artist.id);
-      if (track) {
-        track.artistId = null;
-      }
+      // const track = this.tracksStorage.findByArtistId(artist.id);
+      // if (track) {
+      //   track.artistId = null;
+      // }
 
       // const album = this.albumsStorage.findByArtistId(artist.id);
       // if (album) {

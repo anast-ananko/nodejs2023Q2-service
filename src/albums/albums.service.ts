@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
-import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
 import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 
 import { AlbumEntity } from './entities/album.entity';
@@ -14,8 +13,8 @@ export class AlbumsService {
   constructor(
     @InjectRepository(AlbumEntity)
     private readonly albumRepository: Repository<AlbumEntity>,
-    @Inject('TracksStore')
-    private tracksStorage: InMemoryTracksStore,
+    // @Inject('TracksStore')
+    // private tracksStorage: InMemoryTracksStore,
     @Inject('FavsStore')
     private favsStorage: InMemoryFavsStore,
   ) {}

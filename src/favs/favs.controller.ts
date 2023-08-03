@@ -23,31 +23,31 @@ export class FavsController {
     return this.favsService.findAll();
   }
 
-  @Post('track/:id')
-  @HttpCode(HttpStatus.CREATED)
-  addTrack(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid trackId');
-    }
+  // @Post('track/:id')
+  // @HttpCode(HttpStatus.CREATED)
+  // addTrack(@Param('id') id: string) {
+  //   if (!validate(id)) {
+  //     throw new BadRequestException('Invalid trackId');
+  //   }
 
-    const track = this.favsService.addTrack(id);
-    if (!track) {
-      throw new UnprocessableEntityException('Track not found');
-    }
-  }
+  //   const track = this.favsService.addTrack(id);
+  //   if (!track) {
+  //     throw new UnprocessableEntityException('Track not found');
+  //   }
+  // }
 
-  @Delete('track/:id')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  deleteTrack(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid trackId');
-    }
+  // @Delete('track/:id')
+  // @HttpCode(HttpStatus.NO_CONTENT)
+  // deleteTrack(@Param('id') id: string) {
+  //   if (!validate(id)) {
+  //     throw new BadRequestException('Invalid trackId');
+  //   }
 
-    const track = this.favsService.deleteTrack(id);
-    if (!track) {
-      throw new NotFoundException('Track not found');
-    }
-  }
+  //   const track = this.favsService.deleteTrack(id);
+  //   if (!track) {
+  //     throw new NotFoundException('Track not found');
+  //   }
+  // }
 
   // @Post('album/:id')
   // @HttpCode(HttpStatus.CREATED)

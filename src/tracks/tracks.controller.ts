@@ -7,7 +7,6 @@ import {
   Param,
   Body,
   BadRequestException,
-  NotFoundException,
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
@@ -32,13 +31,7 @@ export class TracksController {
       throw new BadRequestException('Invalid trackId');
     }
 
-    const track = this.tracksService.findOne(id);
-
-    if (!track) {
-      throw new NotFoundException('Track not found');
-    }
-
-    return track;
+    return this.tracksService.findOne(id);
   }
 
   @Post()
@@ -52,11 +45,6 @@ export class TracksController {
       throw new BadRequestException('Invalid trackId');
     }
 
-    const track = this.tracksService.findOne(id);
-    if (!track) {
-      throw new NotFoundException('Track not found');
-    }
-
     return this.tracksService.update(id, updateTrackDto);
   }
 
@@ -67,11 +55,6 @@ export class TracksController {
       throw new BadRequestException('Invalid trackId');
     }
 
-    const track = this.tracksService.findOne(id);
-    if (!track) {
-      throw new NotFoundException('Track not found');
-    }
-
-    this.tracksService.delete(id);
+    return this.tracksService.delete(id);
   }
 }
