@@ -57,11 +57,6 @@ export class AlbumsService {
 
     if (album) {
       return await this.albumRepository.delete({ id: album.id });
-      // const track = this.tracksStorage.findByAlbumId(album.id);
-      // if (track) {
-      //   track.albumId = null;
-      // }
-      // this.favsStorage.deleteAlbum(album.id);
     }
   }
 }

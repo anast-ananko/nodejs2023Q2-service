@@ -30,8 +30,11 @@ export class TracksService {
   async create(createTrackDto: CreateTrackDto) {
     const track = await this.trackRepository.save({
       ...createTrackDto,
+      artistId: null,
+      albumId: null,
     });
 
+    console.log(await this.findOne(track.id));
     return await this.findOne(track.id);
   }
 

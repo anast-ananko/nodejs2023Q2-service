@@ -59,18 +59,6 @@ export class ArtistsService {
     const artist = await this.findOne(id);
 
     if (artist) {
-      // const track = this.tracksStorage.findByArtistId(artist.id);
-      // if (track) {
-      //   track.artistId = null;
-      // }
-
-      // const album = this.albumsStorage.findByArtistId(artist.id);
-      // if (album) {
-      //   album.artistId = null;
-      // }
-
-      this.favsStorage.deleteArtist(artist.id);
-
       return await this.artistRepository.delete({ id: artist.id });
     }
   }

@@ -4,7 +4,7 @@ import { InMemoryFavsStore } from './store/favs.storage';
 // import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
 // import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
 //import { InMemoryArtistsStore } from 'src/artists/store/artists.storage';
-import { FavsData } from './interfaces/favs.interface';
+//import { FavsData } from './interfaces/favs.interface';
 
 @Injectable()
 export class FavsService {
@@ -15,7 +15,7 @@ export class FavsService {
 
   findAll() {
     const favs = this.favsStorage.findAll();
-    const favsData: FavsData = {
+    const favsData = {
       artists: [],
       albums: [],
       tracks: [],

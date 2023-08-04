@@ -1,7 +1,7 @@
-import { Favs } from './favs.interface';
+//import { Favs } from './favs.interface';
 
 export interface FavsStore {
-  findAll: () => Favs;
+  //findAll: () => Favs;
   addTrack: (id: string) => void;
   deleteTrack: (id: string) => string | null;
   addAlbum: (id: string) => void;

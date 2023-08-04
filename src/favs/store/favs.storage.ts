@@ -1,11 +1,11 @@
 import { Injectable, Scope } from '@nestjs/common';
 
 import { FavsStore } from '../interfaces/favs-storage.interface';
-import { Favs } from '../interfaces/favs.interface';
+//import { Favs } from '../interfaces/favs.interface';
 
 @Injectable({ scope: Scope.DEFAULT })
 export class InMemoryFavsStore implements FavsStore {
-  private favs: Favs = {
+  private favs = {
     artists: [],
     albums: [],
     tracks: [],
