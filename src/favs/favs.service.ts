@@ -1,9 +1,7 @@
 import {
-  Inject,
   Injectable,
   NotFoundException,
   UnprocessableEntityException,
-  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -12,12 +10,9 @@ import { instanceToPlain } from 'class-transformer';
 import { FavsArtistEntity } from './entities/favs-artist.entity';
 import { FavsAlbumEntity } from './entities/favs-album.entity';
 import { FavsTrackEntity } from './entities/favs-track.entity';
-import { ArtistsService } from 'src/artists/artists.service';
-import { AlbumsService } from 'src/albums/albums.service';
-import { TracksService } from 'src/tracks/tracks.service';
-import { ArtistEntity } from 'src/artists/entities/artist.entity';
-import { AlbumEntity } from 'src/albums/entities/album.entity';
-import { TrackEntity } from 'src/tracks/entities/track.entity';
+import { ArtistEntity } from '../artists/entities/artist.entity';
+import { AlbumEntity } from '../albums/entities/album.entity';
+import { TrackEntity } from '../tracks/entities/track.entity';
 
 export interface FavsData {
   artists: ArtistEntity[];
@@ -40,12 +35,6 @@ export class FavsService {
     private readonly albumsRepository: Repository<AlbumEntity>,
     @InjectRepository(TrackEntity)
     private readonly tracksRepository: Repository<TrackEntity>,
-    @Inject(forwardRef(() => ArtistsService))
-    private artistsService: ArtistsService,
-    @Inject(forwardRef(() => AlbumsService))
-    private albumsService: AlbumsService,
-    @Inject(forwardRef(() => TracksService))
-    private tracksService: TracksService,
   ) {}
 
   async findAll() {
@@ -59,7 +48,6 @@ export class FavsService {
       tracks: [],
     };
 
-    // Асинхронное преобразование массива favsArtist
     const artistPromises = favsArtist.map(async (artist: FavsArtistEntity) => {
       const foundArtist = await this.artistsRepository.find({
         where: { id: artist.artistId },
@@ -70,7 +58,6 @@ export class FavsService {
       }
     });
 
-    // Асинхронное преобразование массива favsAlbum
     const albumPromises = favsAlbum.map(async (album: FavsAlbumEntity) => {
       const foundAlbum = await this.albumsRepository.find({
         where: { id: album.albumId },
@@ -81,7 +68,6 @@ export class FavsService {
       }
     });
 
-    // Асинхронное преобразование массива favsTrack
     const trackPromises = favsTrack.map(async (track: FavsTrackEntity) => {
       const foundTrack = await this.tracksRepository.find({
         where: { id: track.trackId },
@@ -92,62 +78,10 @@ export class FavsService {
       }
     });
 
-    // Ожидание завершения всех асинхронных операций с помощью Promise.all
     favsData.artists = await Promise.all(artistPromises);
     favsData.albums = await Promise.all(albumPromises);
     favsData.tracks = await Promise.all(trackPromises);
 
-    // favsArtist.forEach(async (artist: FavsArtistEntity) => {
-    //   const foundArtist = await this.artistsRepository.find({
-    //     where: { id: artist.artistId },
-    //   });
-
-    //   if (foundArtist) {
-    //     favsData.artists.push(foundArtist[0]);
-    //   }
-    // });
-
-    // favsAlbum.forEach(async (album: FavsAlbumEntity) => {
-    //   const foundAlbum = await this.albumsRepository.find({
-    //     where: { id: album.albumId },
-    //   });
-
-    //   if (foundAlbum) {
-    //     favsData.albums.push(foundAlbum[0]);
-    //   }
-    // });
-
-    // favsTrack.forEach(async (track: FavsTrackEntity) => {
-    //   const foundTrack = await this.tracksRepository.find({
-    //     where: { id: track.trackId },
-    //   });
-
-    //   if (foundTrack) {
-    //     favsData.tracks.push(foundTrack[0]);
-    //   }
-    // });
-
-    // favsData.artists = await Promise.all(
-    //   favsArtist.map(
-    //     async (artist: FavsArtistEntity) =>
-    //       await this.artistsRepository.find({
-    //         where: { id: artist.artistId },
-    //       }),
-    //   ),
-    // );
-    // favsData.albums = await Promise.all(
-    //   favsAlbum.map(
-    //     async (album: FavsAlbumEntity) =>
-    //       await this.albumsRepository.find({ where: { id: album.albumId } }),
-    //   ),
-    // );
-    // favsData.tracks = await Promise.all(
-    //   favsTrack.map(
-    //     async (track: FavsTrackEntity) =>
-    //       await this.tracksRepository.find({ where: { id: track.trackId } }),
-    //   ),
-    // );
-    console.log(favsData);
     return favsData;
   }
 

@@ -2,8 +2,6 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -22,12 +20,6 @@ export class FavsTrackEntity {
     name: 'trackId',
     referencedColumnName: 'id',
   })
-
-  // @ManyToMany(() => TrackEntity, {
-  //   eager: true,
-  // })
-  // @JoinTable()
-  // tracks: TrackEntity[];
   @Column({ nullable: true })
   trackId: string;
 }

@@ -13,7 +13,7 @@ export class TracksService {
     @InjectRepository(TrackEntity)
     private readonly trackRepository: Repository<TrackEntity>,
     @InjectRepository(FavsTrackEntity)
-    private readonly favsTrackRepository: Repository<FavsTrackEntity>, // @Inject('FavsStore') // private favsStorage: InMemoryFavsStore,
+    private readonly favsTrackRepository: Repository<FavsTrackEntity>,
   ) {}
 
   async findAll() {
@@ -31,12 +31,6 @@ export class TracksService {
   }
 
   async create(createTrackDto: CreateTrackDto) {
-    // const track = await this.trackRepository.save({
-    //   ...createTrackDto,
-    //   // artistId: null,
-    //   // albumId: null,
-    // });
-
     const track = await this.trackRepository.save({
       name: createTrackDto.name,
       artistId:

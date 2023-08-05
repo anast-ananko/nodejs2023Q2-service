@@ -4,11 +4,8 @@ import { Repository } from 'typeorm';
 
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
-// import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
-// import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
-// import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 import { ArtistEntity } from './entities/artist.entity';
-import { FavsArtistEntity } from 'src/favs/entities/favs-artist.entity';
+import { FavsArtistEntity } from '../favs/entities/favs-artist.entity';
 
 @Injectable()
 export class ArtistsService {
@@ -16,7 +13,7 @@ export class ArtistsService {
     @InjectRepository(ArtistEntity)
     private readonly artistRepository: Repository<ArtistEntity>,
     @InjectRepository(FavsArtistEntity)
-    private readonly favsArtistRepository: Repository<FavsArtistEntity>, // @Inject('TracksStore') // private tracksStorage: InMemoryTracksStore, // @Inject('AlbumsStore') // private albumsStorage: InMemoryAlbumsStore, // @Inject('FavsStore') // private favsStorage: InMemoryFavsStore,
+    private readonly favsArtistRepository: Repository<FavsArtistEntity>,
   ) {}
 
   async findAll() {

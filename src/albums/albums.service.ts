@@ -1,10 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
-// import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 
 import { AlbumEntity } from './entities/album.entity';
 import { FavsAlbumEntity } from 'src/favs/entities/favs-album.entity';
@@ -15,7 +14,7 @@ export class AlbumsService {
     @InjectRepository(AlbumEntity)
     private readonly albumRepository: Repository<AlbumEntity>,
     @InjectRepository(FavsAlbumEntity)
-    private readonly favsAlbumRepository: Repository<FavsAlbumEntity>, // @Inject('TracksStore') // private tracksStorage: InMemoryTracksStore, // @Inject('FavsStore') // private favsStorage: InMemoryFavsStore,
+    private readonly favsAlbumRepository: Repository<FavsAlbumEntity>,
   ) {}
 
   async findAll() {
@@ -47,6 +46,7 @@ export class AlbumsService {
       throw new NotFoundException('Album not found');
     } else {
       await this.albumRepository.update(id, updateAlbumDto);
+
       return await this.findOne(id);
     }
   }

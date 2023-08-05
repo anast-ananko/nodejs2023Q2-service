@@ -2,8 +2,6 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -16,12 +14,6 @@ export class FavsArtistEntity {
   @PrimaryGeneratedColumn('uuid')
   @Exclude()
   id: string;
-
-  // @ManyToMany(() => ArtistEntity, {
-  //   eager: true,
-  // })
-  // @JoinTable()
-  // artists: ArtistEntity[];
 
   @OneToOne(() => ArtistEntity, (artist) => artist.id)
   @JoinColumn({

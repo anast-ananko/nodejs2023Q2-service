@@ -2,8 +2,6 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -17,11 +15,6 @@ export class FavsAlbumEntity {
   @Exclude()
   id: string;
 
-  // @ManyToMany(() => AlbumEntity, {
-  //   eager: true,
-  // })
-  // @JoinTable()
-  // albums: AlbumEntity[];
   @OneToOne(() => AlbumEntity, (album) => album.id)
   @JoinColumn({
     name: 'albumId',
