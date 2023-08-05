@@ -4,9 +4,9 @@ export class CreateTrackDto {
   @IsNotEmpty()
   name: string;
 
-  artistId: string;
+  artistId?: string;
 
-  albumId: string;
+  albumId?: string;
 
   @IsNotEmpty()
   duration: number;

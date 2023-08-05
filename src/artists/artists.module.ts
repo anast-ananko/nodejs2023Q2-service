@@ -7,14 +7,10 @@ import { ArtistEntity } from './entities/artist.entity';
 import { AlbumsModule } from 'src/albums/albums.module';
 import { TracksModule } from 'src/tracks/tracks.module';
 import { FavsModule } from 'src/favs/favs.module';
+import { FavsArtistEntity } from 'src/favs/entities/favs-artist.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ArtistEntity]),
-    TracksModule,
-    AlbumsModule,
-    FavsModule,
-  ],
+  imports: [TypeOrmModule.forFeature([ArtistEntity, FavsArtistEntity])],
   controllers: [ArtistsController],
   providers: [ArtistsService],
   exports: [ArtistsService],

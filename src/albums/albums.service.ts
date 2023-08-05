@@ -4,19 +4,18 @@ import { Repository } from 'typeorm';
 
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
-import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
+// import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 
 import { AlbumEntity } from './entities/album.entity';
+import { FavsAlbumEntity } from 'src/favs/entities/favs-album.entity';
 
 @Injectable()
 export class AlbumsService {
   constructor(
     @InjectRepository(AlbumEntity)
     private readonly albumRepository: Repository<AlbumEntity>,
-    // @Inject('TracksStore')
-    // private tracksStorage: InMemoryTracksStore,
-    @Inject('FavsStore')
-    private favsStorage: InMemoryFavsStore,
+    @InjectRepository(FavsAlbumEntity)
+    private readonly favsAlbumRepository: Repository<FavsAlbumEntity>, // @Inject('TracksStore') // private tracksStorage: InMemoryTracksStore, // @Inject('FavsStore') // private favsStorage: InMemoryFavsStore,
   ) {}
 
   async findAll() {
@@ -56,7 +55,13 @@ export class AlbumsService {
     const album = await this.findOne(id);
 
     if (album) {
-      return await this.albumRepository.delete({ id: album.id });
+      const favsAlbum = await this.favsAlbumRepository.find({
+        where: { albumId: album.id },
+      });
+
+      await this.favsAlbumRepository.remove(favsAlbum);
+
+      return await this.albumRepository.remove(album);
     }
   }
 }

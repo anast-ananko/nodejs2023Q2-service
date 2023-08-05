@@ -7,9 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { FavsModule } from 'src/favs/favs.module';
 import { AlbumEntity } from './entities/album.entity';
+import { FavsAlbumEntity } from 'src/favs/entities/favs-album.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AlbumEntity]), TracksModule, FavsModule],
+  imports: [TypeOrmModule.forFeature([AlbumEntity, FavsAlbumEntity])],
   controllers: [AlbumsController],
   providers: [AlbumsService],
   exports: [AlbumsService],

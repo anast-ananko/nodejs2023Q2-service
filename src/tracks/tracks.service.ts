@@ -5,12 +5,15 @@ import { Repository } from 'typeorm';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import { TrackEntity } from './entities/track.entity';
+import { FavsTrackEntity } from 'src/favs/entities/favs-track.entity';
 
 @Injectable()
 export class TracksService {
   constructor(
     @InjectRepository(TrackEntity)
-    private readonly trackRepository: Repository<TrackEntity>, // @Inject('FavsStore') // private favsStorage: InMemoryFavsStore,
+    private readonly trackRepository: Repository<TrackEntity>,
+    @InjectRepository(FavsTrackEntity)
+    private readonly favsTrackRepository: Repository<FavsTrackEntity>, // @Inject('FavsStore') // private favsStorage: InMemoryFavsStore,
   ) {}
 
   async findAll() {
@@ -28,13 +31,20 @@ export class TracksService {
   }
 
   async create(createTrackDto: CreateTrackDto) {
-    const track = await this.trackRepository.save({
-      ...createTrackDto,
-      artistId: null,
-      albumId: null,
-    });
+    // const track = await this.trackRepository.save({
+    //   ...createTrackDto,
+    //   // artistId: null,
+    //   // albumId: null,
+    // });
 
-    console.log(await this.findOne(track.id));
+    const track = await this.trackRepository.save({
+      name: createTrackDto.name,
+      artistId:
+        createTrackDto.artistId === undefined ? null : createTrackDto.artistId,
+      albumId:
+        createTrackDto.albumId === undefined ? null : createTrackDto.albumId,
+      duration: createTrackDto.duration,
+    });
     return await this.findOne(track.id);
   }
 
@@ -53,7 +63,13 @@ export class TracksService {
     const track = await this.findOne(id);
 
     if (track) {
-      return await this.trackRepository.delete({ id: track.id });
+      const favsTrack = await this.favsTrackRepository.find({
+        where: { trackId: track.id },
+      });
+
+      await this.favsTrackRepository.remove(favsTrack);
+
+      return await this.trackRepository.remove(track);
     }
   }
 }

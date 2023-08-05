@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -6,20 +6,17 @@ import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 // import { InMemoryTracksStore } from 'src/tracks/store/tracks.storage';
 // import { InMemoryAlbumsStore } from 'src/albums/store/albums.storage';
-import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
+// import { InMemoryFavsStore } from 'src/favs/store/favs.storage';
 import { ArtistEntity } from './entities/artist.entity';
+import { FavsArtistEntity } from 'src/favs/entities/favs-artist.entity';
 
 @Injectable()
 export class ArtistsService {
   constructor(
     @InjectRepository(ArtistEntity)
     private readonly artistRepository: Repository<ArtistEntity>,
-    // @Inject('TracksStore')
-    // private tracksStorage: InMemoryTracksStore,
-    // @Inject('AlbumsStore')
-    // private albumsStorage: InMemoryAlbumsStore,
-    @Inject('FavsStore')
-    private favsStorage: InMemoryFavsStore,
+    @InjectRepository(FavsArtistEntity)
+    private readonly favsArtistRepository: Repository<FavsArtistEntity>, // @Inject('TracksStore') // private tracksStorage: InMemoryTracksStore, // @Inject('AlbumsStore') // private albumsStorage: InMemoryAlbumsStore, // @Inject('FavsStore') // private favsStorage: InMemoryFavsStore,
   ) {}
 
   async findAll() {
@@ -59,7 +56,13 @@ export class ArtistsService {
     const artist = await this.findOne(id);
 
     if (artist) {
-      return await this.artistRepository.delete({ id: artist.id });
+      const favsArtist = await this.favsArtistRepository.find({
+        where: { artistId: artist.id },
+      });
+
+      await this.favsArtistRepository.remove(favsArtist);
+
+      return await this.artistRepository.remove(artist);
     }
   }
 }

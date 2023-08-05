@@ -14,7 +14,7 @@ export const configPostgres: DataSourceOptions = {
   entities: ['dist/**/*.entity.js'],
   migrations: ['dist/migrations/*.js'],
   migrationsRun: true,
-  logging: true,
+  logging: false,
 };
 
 const dataSource = new DataSource(configPostgres);
