@@ -45,6 +45,7 @@ export class ArtistsService {
       throw new NotFoundException('Artist not found');
     } else {
       await this.artistRepository.update(id, updateArtistDto);
+
       return await this.findOne(id);
     }
   }

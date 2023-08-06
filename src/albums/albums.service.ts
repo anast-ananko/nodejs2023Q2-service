@@ -4,9 +4,8 @@ import { Repository } from 'typeorm';
 
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
-
 import { AlbumEntity } from './entities/album.entity';
-import { FavsAlbumEntity } from 'src/favs/entities/favs-album.entity';
+import { FavsAlbumEntity } from '../favs/entities/favs-album.entity';
 
 @Injectable()
 export class AlbumsService {

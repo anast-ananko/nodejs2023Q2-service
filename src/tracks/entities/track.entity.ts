@@ -6,8 +6,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { ArtistEntity } from 'src/artists/entities/artist.entity';
-import { AlbumEntity } from 'src/albums/entities/album.entity';
+import { ArtistEntity } from '../../artists/entities/artist.entity';
+import { AlbumEntity } from '../../albums/entities/album.entity';
 
 @Entity('track')
 export class TrackEntity {

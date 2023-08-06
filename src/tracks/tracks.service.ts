@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import { TrackEntity } from './entities/track.entity';
-import { FavsTrackEntity } from 'src/favs/entities/favs-track.entity';
+import { FavsTrackEntity } from '../favs/entities/favs-track.entity';
 
 @Injectable()
 export class TracksService {
