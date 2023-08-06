@@ -16,7 +16,7 @@ services:
       - ./src:/app/src 
   postgres:
     container_name: postgres
-    build: ./database
+    build: ./src/database
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
     environment:

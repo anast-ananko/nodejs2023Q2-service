@@ -3,7 +3,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 dotenv.config();
 
-export const configPostgres: DataSourceOptions = {
+export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
   host: process.env.POSTGRES_HOST as string,
   port: parseInt(process.env.POSTGRES_PORT as string, 10) as number,
@@ -12,11 +12,11 @@ export const configPostgres: DataSourceOptions = {
   database: process.env.POSTGRES_DB as string,
   synchronize: true,
   entities: ['dist/**/*.entity.js'],
-  migrations: ['dist/migrations/*.js'],
-  migrationsRun: true,
+  migrations: ['dist/database/migrations/*.js'],
+  migrationsRun: false,
   logging: false,
 };
 
-const dataSource = new DataSource(configPostgres);
+const dataSource = new DataSource(dataSourceOptions);
 
 export default dataSource;

@@ -8,11 +8,11 @@ import { ArtistsModule } from './artists/artists.module';
 import { TracksModule } from './tracks/tracks.module';
 import { AlbumsModule } from './albums/albums.module';
 import { FavsModule } from './favs/favs.module';
-import { configPostgres } from './typeorm.config';
+import { dataSourceOptions } from './typeorm.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(configPostgres),
+    TypeOrmModule.forRoot(dataSourceOptions),
     UsersModule,
     ArtistsModule,
     TracksModule,
