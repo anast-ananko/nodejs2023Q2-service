@@ -6,11 +6,10 @@ import {
   Delete,
   Param,
   Body,
-  BadRequestException,
   HttpStatus,
   HttpCode,
+  ParseUUIDPipe,
 } from '@nestjs/common';
-import { validate } from 'uuid';
 
 import { TracksService } from './tracks.service';
 import { CreateTrackDto } from './dto/create-track.dto';
@@ -26,11 +25,7 @@ export class TracksController {
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid trackId');
-    }
-
+  getOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.tracksService.findOne(id);
   }
 
@@ -40,21 +35,16 @@ export class TracksController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateTrackDto: UpdateTrackDto) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid trackId');
-    }
-
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateTrackDto: UpdateTrackDto,
+  ) {
     return this.tracksService.update(id, updateTrackDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  delete(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid trackId');
-    }
-
+  delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.tracksService.delete(id);
   }
 }

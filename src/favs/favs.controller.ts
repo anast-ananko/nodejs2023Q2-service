@@ -4,11 +4,10 @@ import {
   Post,
   Delete,
   Param,
-  BadRequestException,
   HttpStatus,
   HttpCode,
+  ParseUUIDPipe,
 } from '@nestjs/common';
-import { validate } from 'uuid';
 
 import { FavsService } from './favs.service';
 
@@ -23,60 +22,37 @@ export class FavsController {
 
   @Post('track/:id')
   @HttpCode(HttpStatus.CREATED)
-  addTrack(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid trackId');
-    }
+  addTrack(@Param('id', ParseUUIDPipe) id: string) {
     return this.favsService.addTrack(id);
   }
 
   @Delete('track/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteTrack(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid trackId');
-    }
-
+  deleteTrack(@Param('id', ParseUUIDPipe) id: string) {
     return this.favsService.deleteTrack(id);
   }
 
   @Post('album/:id')
   @HttpCode(HttpStatus.CREATED)
-  addAlbum(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid albumId');
-    }
-
+  addAlbum(@Param('id', ParseUUIDPipe) id: string) {
     return this.favsService.addAlbum(id);
   }
 
   @Delete('album/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteAlbum(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid albumId');
-    }
-
+  deleteAlbum(@Param('id', ParseUUIDPipe) id: string) {
     return this.favsService.deleteAlbum(id);
   }
 
   @Post('artist/:id')
   @HttpCode(HttpStatus.CREATED)
-  addArtist(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid artistId');
-    }
-
+  addArtist(@Param('id', ParseUUIDPipe) id: string) {
     return this.favsService.addArtist(id);
   }
 
   @Delete('artist/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteArtist(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid artistId');
-    }
-
+  deleteArtist(@Param('id', ParseUUIDPipe) id: string) {
     return this.favsService.deleteArtist(id);
   }
 }

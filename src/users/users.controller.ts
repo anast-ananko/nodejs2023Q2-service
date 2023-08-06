@@ -6,11 +6,10 @@ import {
   Delete,
   Param,
   Body,
-  BadRequestException,
   HttpStatus,
   HttpCode,
+  ParseUUIDPipe,
 } from '@nestjs/common';
-import { validate } from 'uuid';
 
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -26,11 +25,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  getOne(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid userId');
-    }
-
+  getOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.findOne(id);
   }
 
@@ -40,21 +35,16 @@ export class UsersController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid userId');
-    }
-
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  delete(@Param('id') id: string) {
-    if (!validate(id)) {
-      throw new BadRequestException('Invalid userId');
-    }
-
+  delete(@Param('id', ParseUUIDPipe) id: string) {
     return this.usersService.delete(id);
   }
 }
