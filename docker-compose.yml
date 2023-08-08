@@ -19,7 +19,7 @@ services:
       - server-network  
     restart: always 
     volumes:
-      - ./src:/app/src 
+      - ./src:/app/src
   postgres:
     container_name: postgres
     build: ./src/database
@@ -31,8 +31,15 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     networks:
       - server-network 
-    restart: always    
+    restart: always 
+    volumes:
+      - pgdata:/var/lib/postgresql/data   
+      - pglogs:/var/log/postgresql
 
 networks:
   server-network:
     driver: bridge
+
+volumes: 
+  pgdata:
+  pglogs:
