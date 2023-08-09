@@ -3,6 +3,7 @@ version: '3.0'
 services:
   server:
     container_name: server
+    image: aananko/nodejs2023q2-service-server
     build: .
     ports:
       - ${PORT}:${PORT}
@@ -22,6 +23,7 @@ services:
       - ./src:/app/src
   postgres:
     container_name: postgres
+    image: aananko/nodejs2023q2-service-postgres
     build: ./src/database
     ports:
       - ${POSTGRES_PORT_DB_CONTAINER}:${POSTGRES_PORT}
