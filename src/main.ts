@@ -28,6 +28,15 @@ async function bootstrap() {
   const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
+  process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception thrown:', error);
+    process.exit(1);
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at Promise:', promise);
+  });
+
   await app.listen(port);
 }
 bootstrap();
