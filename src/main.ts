@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { config } from 'dotenv';
@@ -8,6 +8,7 @@ import * as path from 'path';
 import * as jsYaml from 'js-yaml';
 
 import { MyLogger } from './logger/logger.service';
+import { AllExceptionsFilter } from './filter/exceptions.filter';
 
 config();
 const port = process.env.PORT || 4000;
@@ -24,6 +25,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   //app.useLogger(app.get(MyLogger));
+  const httpAdapter = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
   await app.listen(port);
 }
