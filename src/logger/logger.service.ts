@@ -3,6 +3,7 @@ import { Injectable, LoggerService } from '@nestjs/common';
 import { IMessage } from '../interfaces/message.interface';
 import { ANSIColors, logData } from '../utils/logData';
 import { FileLoggerService } from './file-logger.service';
+import { writeErrorData } from '../utils/writeErrorData';
 
 @Injectable()
 export class MyLogger implements LoggerService {
@@ -16,6 +17,7 @@ export class MyLogger implements LoggerService {
   error(message: IMessage) {
     logData(message, ANSIColors.ERROR);
     this.fileLogger.error(message);
+    writeErrorData(message);
   }
 
   warn(message: IMessage) {
