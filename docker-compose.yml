@@ -10,12 +10,7 @@ services:
     command: npm run start:dev
     depends_on:
       - postgres
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_PORT=${POSTGRES_PORT}
-      - POSTGRES_HOST=${POSTGRES_HOST}
+    env_file: .env.docker
     networks:
       - server-network  
     restart: always 
@@ -27,10 +22,7 @@ services:
     build: ./src/database
     ports:
       - ${POSTGRES_PORT_DB_CONTAINER}:${POSTGRES_PORT}
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
+    env_file: .env.docker
     networks:
       - server-network 
     restart: always 

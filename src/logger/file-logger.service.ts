@@ -1,7 +1,7 @@
 import { Injectable, LoggerService } from '@nestjs/common';
 
 import { IMessage } from '../interfaces/message.interface';
-import { writeData } from 'src/utils/writeData';
+import { writeData } from '../utils/writeData';
 
 @Injectable()
 export class FileLoggerService implements LoggerService {
