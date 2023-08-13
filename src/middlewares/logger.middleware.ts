@@ -26,7 +26,7 @@ export class LoggerMiddleware implements NestMiddleware {
               body,
               statusCode,
             },
-            0,
+            2,
           );
           break;
         case 3:
@@ -51,7 +51,7 @@ export class LoggerMiddleware implements NestMiddleware {
               body,
               statusCode,
             },
-            2,
+            0,
           );
           break;
         default:
@@ -63,7 +63,7 @@ export class LoggerMiddleware implements NestMiddleware {
               body,
               statusCode,
             },
-            0,
+            3,
           );
       }
     });

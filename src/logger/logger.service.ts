@@ -16,7 +16,7 @@ export class MyLogger implements LoggerService {
   }
 
   private shouldLog(level: number): boolean {
-    return level >= this.logLevel;
+    return level <= this.logLevel;
   }
 
   log(message: IMessage, level = 0) {
