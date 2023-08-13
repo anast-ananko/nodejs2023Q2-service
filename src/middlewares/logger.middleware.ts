@@ -18,41 +18,53 @@ export class LoggerMiddleware implements NestMiddleware {
       switch (firstDigit) {
         case 1:
         case 2:
-          this.logger.log({
-            method,
-            url,
-            params,
-            body,
-            statusCode,
-          });
+          this.logger.log(
+            {
+              method,
+              url,
+              params,
+              body,
+              statusCode,
+            },
+            0,
+          );
           break;
         case 3:
         case 4:
-          this.logger.warn({
-            method,
-            url,
-            params,
-            body,
-            statusCode,
-          });
+          this.logger.warn(
+            {
+              method,
+              url,
+              params,
+              body,
+              statusCode,
+            },
+            1,
+          );
           break;
         case 5:
-          this.logger.error({
-            method,
-            url,
-            params,
-            body,
-            statusCode,
-          });
+          this.logger.error(
+            {
+              method,
+              url,
+              params,
+              body,
+              statusCode,
+            },
+            2,
+          );
           break;
         default:
-          this.logger.verbose({
-            method,
-            url,
-            params,
-            body,
-            statusCode,
-          });
+          this.logger.verbose(
+            {
+              method,
+              url,
+              params,
+              body,
+              statusCode,
+            },
+            0,
+          );
       }
     });
 

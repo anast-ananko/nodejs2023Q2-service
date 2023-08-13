@@ -6,10 +6,7 @@ import { IMessage } from '../interfaces/message.interface';
 import { rotateLog } from './rotateLog';
 import { dateFormat } from './dateFormat';
 
-const MAX_LOG_FILE_SIZE = parseInt(
-  process.env.MAX_LOG_FILE_SIZE || '20000',
-  10,
-);
+const MAX_LOG_FILE_SIZE = parseInt(process.env.MAX_LOG_FILE_SIZE, 10) || 20000;
 
 const logDir = path.resolve(__dirname, '..', '..', 'logs');
 const errorLogFilePath = path.resolve(logDir, 'error.log');

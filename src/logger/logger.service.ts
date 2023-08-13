@@ -9,29 +9,49 @@ import { writeErrorData } from '../utils/writeErrorData';
 export class MyLogger implements LoggerService {
   constructor(private readonly fileLogger: FileLoggerService) {}
 
-  log(message: IMessage) {
-    logData(message, ANSIColors.LOG);
-    this.fileLogger.log(message);
+  private logLevel = 0;
+
+  setLogLevel(level: number) {
+    this.logLevel = level;
   }
 
-  error(message: IMessage) {
-    logData(message, ANSIColors.ERROR);
-    this.fileLogger.error(message);
-    writeErrorData(message);
+  private shouldLog(level: number): boolean {
+    return level >= this.logLevel;
   }
 
-  warn(message: IMessage) {
-    logData(message, ANSIColors.WARN);
-    this.fileLogger.warn(message);
+  log(message: IMessage, level = 0) {
+    if (this.shouldLog(level)) {
+      logData(message, ANSIColors.LOG);
+      this.fileLogger.log(message);
+    }
   }
 
-  debug?(message: IMessage) {
-    logData(message, ANSIColors.DEBUG);
-    this.fileLogger.debug(message);
+  error(message: IMessage, level = 0) {
+    if (this.shouldLog(level)) {
+      logData(message, ANSIColors.ERROR);
+      this.fileLogger.error(message);
+      writeErrorData(message);
+    }
   }
 
-  verbose?(message: IMessage) {
-    logData(message, ANSIColors.VERBOSE);
-    this.fileLogger.verbose(message);
+  warn(message: IMessage, level = 0) {
+    if (this.shouldLog(level)) {
+      logData(message, ANSIColors.WARN);
+      this.fileLogger.warn(message);
+    }
+  }
+
+  debug?(message: IMessage, level = 0) {
+    if (this.shouldLog(level)) {
+      logData(message, ANSIColors.DEBUG);
+      this.fileLogger.debug(message);
+    }
+  }
+
+  verbose?(message: IMessage, level = 0) {
+    if (this.shouldLog(level)) {
+      logData(message, ANSIColors.VERBOSE);
+      this.fileLogger.verbose(message);
+    }
   }
 }

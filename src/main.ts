@@ -11,7 +11,8 @@ import { MyLogger } from './logger/logger.service';
 import { AllExceptionsFilter } from './filter/exceptions.filter';
 
 config();
-const port = process.env.PORT || 4000;
+const port = parseInt(process.env.PORT, 10) || 4000;
+const logLevel = parseInt(process.env.LOG_LEVEL, 10) || 0;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -24,7 +25,9 @@ async function bootstrap() {
   SwaggerModule.setup('/doc', app, swaggerObject);
 
   app.useGlobalPipes(new ValidationPipe());
-  //app.useLogger(app.get(MyLogger));
+
+  app.get(MyLogger).setLogLevel(logLevel);
+
   const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
 
