@@ -11,7 +11,7 @@ import { MyLogger } from './logger/logger.service';
 import { AllExceptionsFilter } from './filter/exceptions.filter';
 
 config();
-const port = parseInt(process.env.PORT, 10) || 4000;
+const port = parseInt(process.env.PORT, 10) || 3000;
 const logLevel = parseInt(process.env.LOG_LEVEL, 10) || 0;
 
 async function bootstrap() {
