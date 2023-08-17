@@ -11,6 +11,7 @@ import { FavsModule } from './favs/favs.module';
 import { dataSourceOptions } from './typeorm.config';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { LoggerModule } from './logger/logger.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { LoggerModule } from './logger/logger.module';
     AlbumsModule,
     FavsModule,
     LoggerModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

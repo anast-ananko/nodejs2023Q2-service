@@ -32,6 +32,14 @@ export class UsersService {
     }
   }
 
+  async findOneByLogin(login: string) {
+    const user = await this.userRepository.findOne({
+      where: { login },
+    });
+
+    return user;
+  }
+
   async findOneWithPassword(id: string) {
     const user = await this.userRepository.findOne({ where: { id } });
 
