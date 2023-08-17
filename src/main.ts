@@ -6,9 +6,12 @@ import { SwaggerModule } from '@nestjs/swagger';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as jsYaml from 'js-yaml';
+import { Reflector } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
 
 import { MyLogger } from './logger/logger.service';
 import { AllExceptionsFilter } from './filter/exceptions.filter';
+import { AuthGuard } from './auth/jwt-auth.guard';
 
 config();
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -30,6 +33,11 @@ async function bootstrap() {
 
   const httpAdapter = app.get(HttpAdapterHost);
   app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+
+  const jwtService = app.get(JwtService);
+  const reflector = app.get(Reflector);
+
+  app.useGlobalGuards(new AuthGuard(jwtService, reflector));
 
   process.on('uncaughtException', (error) => {
     console.error('Uncaught Exception thrown:', error);
