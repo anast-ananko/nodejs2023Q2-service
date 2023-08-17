@@ -3,6 +3,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -10,6 +11,8 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UserEntity } from '../users/entities/user.entity';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { IPayload } from 'src/interfaces/payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -31,6 +34,7 @@ export class AuthService {
     const candidate = await this.usersService.findOneByLogin(
       createUserDto.login,
     );
+
     if (candidate) {
       throw new HttpException(
         'User with such login exists',
@@ -81,5 +85,31 @@ export class AuthService {
     }
 
     throw new ForbiddenException('Incorrect email or password');
+  }
+
+  async refresh(refreshTokenDto: RefreshTokenDto) {
+    if (!refreshTokenDto.refreshToken) {
+      throw new UnauthorizedException(
+        'You are not authorized to access this resource.',
+      );
+    }
+
+    try {
+      const payload: IPayload = await this.jwtService.verify(
+        refreshTokenDto.refreshToken,
+        {
+          secret: process.env.JWT_SECRET_REFRESH_KEY || 'SECRET_KEY',
+        },
+      );
+
+      const user = await this.usersService.findOneByLogin(payload.login);
+
+      return {
+        accessToken: await this.generateAccessToken(user),
+        refreshToken: await this.generateRefreshToken(user),
+      };
+    } catch {
+      throw new ForbiddenException('Access denied');
+    }
   }
 }

@@ -19,7 +19,7 @@ export class UsersService {
   ) {}
 
   async findAll() {
-    return await this.userRepository.find();
+    return instanceToPlain(await this.userRepository.find());
   }
 
   async findOne(id: string) {
