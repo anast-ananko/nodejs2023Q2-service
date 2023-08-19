@@ -21,14 +21,26 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const responseBody = {
+    let responseBody = {
       statusCode: httpStatus,
       error: exception.name,
       message:
-        httpStatus === 500
+        httpStatus === HttpStatus.INTERNAL_SERVER_ERROR
           ? 'An unexpected error has occurred'
           : exception.message,
     };
+
+    if (httpStatus !== HttpStatus.INTERNAL_SERVER_ERROR) {
+      const response = exception.getResponse();
+
+      if (typeof response === 'object' && response.hasOwnProperty('message')) {
+        responseBody = {
+          ...responseBody,
+          message: (response as any).message,
+          error: (response as any).error,
+        };
+      }
+    }
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
   }
