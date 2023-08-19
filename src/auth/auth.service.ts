@@ -12,7 +12,7 @@ import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { UserEntity } from '../users/entities/user.entity';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
-import { IPayload } from 'src/interfaces/payload.interface';
+import { IPayload } from '../interfaces/payload.interface';
 
 @Injectable()
 export class AuthService {
@@ -47,12 +47,10 @@ export class AuthService {
       parseInt(process.env.CRYPT_SALT, 10) || 10,
     );
 
-    const user = await this.usersService.create({
+    return await this.usersService.create({
       ...createUserDto,
       password: hashPassword,
     });
-
-    return user;
   }
 
   private async generateAccessToken(user: UserEntity) {
@@ -94,9 +92,7 @@ export class AuthService {
 
   async refresh(refreshTokenDto: RefreshTokenDto) {
     if (!refreshTokenDto.refreshToken) {
-      throw new UnauthorizedException(
-        'You are not authorized to access this resource.',
-      );
+      throw new UnauthorizedException('No refresh token in body');
     }
 
     try {
@@ -114,7 +110,7 @@ export class AuthService {
         refreshToken: await this.generateRefreshToken(user),
       };
     } catch {
-      throw new ForbiddenException('Access denied');
+      throw new ForbiddenException('Invalid refresh token');
     }
   }
 }
