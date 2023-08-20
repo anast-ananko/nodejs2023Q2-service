@@ -16,6 +16,7 @@ services:
     restart: always 
     volumes:
       - ./src:/app/src
+      - logs:/app/logs
   postgres:
     container_name: postgres
     image: aananko/nodejs2023q2-service-postgres
@@ -37,3 +38,4 @@ networks:
 volumes: 
   pgdata:
   pglogs:
+  logs:

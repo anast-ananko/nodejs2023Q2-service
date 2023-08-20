@@ -16,9 +16,12 @@ export const writeData = async (level: string, message: IMessage) => {
   const logEntry = `[${timestamp}] [${level}] - ${JSON.stringify(message)}\n`;
 
   try {
-    if (!existsSync(logFilePath)) {
+    if (!existsSync(logDir)) {
       await mkdir(logDir);
-      await writeFile(logFilePath, '', { flag: 'wx' });
+    }
+
+    if (!existsSync(logFilePath)) {
+      await writeFile(logFilePath, '', { flag: 'w' });
     }
 
     const logFileSize = (await stat(logFilePath)).size;
