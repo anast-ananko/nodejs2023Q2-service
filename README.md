@@ -6,10 +6,10 @@
 git clone https://github.com/anast-ananko/nodejs2023Q2-service.git
 ```
 
-## Go to `home-library-service-part-2` branch
+## Go to `home-library-service-part-3` branch
 
 ```
-git checkout home-library-service-part-2
+git checkout home-library-service-part-3
 ```
 
 ## Installing NPM modules
@@ -24,7 +24,11 @@ npm install
 
 ## Running application
 
-The server and database are in containers hosted on Docker Hub.
+```
+npm run start
+```
+
+Also the server and database are in containers hosted on Docker Hub.
 
 To download the images from the Dcoker Hub and start the containers
 
@@ -43,35 +47,62 @@ After application running open new terminal and enter:
 To run all tests without authorization
 
 ```
-npm run test
+npm run test:auth
 ```
 
 To run only one of all test suites
 
 ```
-npm run test -- <path to suite>
+npm run test:auth -- <path to suite>
 ```
 
-## Stopping application
+## Logging
+
+If the application runs outside the container, all logs are written to the folder `./logs/`.
+
+The maximum file size is specified in .env file in variable `MAX_LOG_FILE_SIZE`. When a file reaches its maximum size, it is renamed and the logs are written to another file.
+
+Logs with errors are written to a separate file `.logs/error.log` (in addition to logging into a common file).
+
+**Attention!** When the application is running inside a container, all logs are added to volume with name `logs`.
+
+**Logging levels.** The .env file contains a variable `LOG_LEVEL`. The default number is 2. Logging levels:
+ - Level 3. Messages of levels VERBOSE, LOG, WARN, ERROR are logged.
+ - Level 2. Messages of levels LOG, WARN, ERROR are logged.
+ - Level 1. Messages of levels WARN and ERROR are logged.
+ - Level 0. Only ERROR level messages are logged.
+
+## Refresh route
+
+A refresh token is sent in the request body
+
+```
+{
+  "refreshToken": "<refresh_token>"
+}
+```
+
+The access token must also be sent in the header 
+
+```
+Authorization: Bearer <access_token>
+```
+
+If both tokens are valid, 2 new tokens are received in the request body
+
+```
+{
+  "accessToken": "<new_access_token>",
+  "refreshToken": "<new_refresh_token>"
+}
+```
+
+## Stopping containers
 
 To stop containers
 
 ```
 docker-compose down
-```
-
-## Vulnerabilities scanning
-
-To scan server
-
-```
-npm run docker:scan:server
-```
-
-To scan database
-
-```
-npm run docker:scan:database
 ```
 
 ## Documentation
