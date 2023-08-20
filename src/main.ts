@@ -12,6 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import { MyLogger } from './logger/logger.service';
 import { AllExceptionsFilter } from './filter/exceptions.filter';
 import { AuthGuard } from './auth/jwt-auth.guard';
+import { IMessage } from './interfaces/message.interface';
 
 config();
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -39,13 +40,31 @@ async function bootstrap() {
 
   app.useGlobalGuards(new AuthGuard(jwtService, reflector));
 
-  process.on('uncaughtException', (error) => {
-    console.error('Uncaught Exception thrown:', error);
-    process.exit(1);
+  const logger = app.get(MyLogger);
+
+  process.on('uncaughtException', () => {
+    const message: IMessage = {
+      method: 'Uncaught Exception thrown',
+      url: '',
+      params: {},
+      body: '',
+      statusCode: 500,
+    };
+    logger.error(message, 0);
+    setTimeout(() => {
+      process.exit(1);
+    }, 2000);
   });
 
-  process.on('unhandledRejection', (reason, promise) => {
-    console.error('Unhandled Rejection at Promise:', promise);
+  process.on('unhandledRejection', () => {
+    const message: IMessage = {
+      method: 'Unhandled Rejection at Promise',
+      url: '',
+      params: {},
+      body: '',
+      statusCode: 500,
+    };
+    logger.error(message, 0);
   });
 
   await app.listen(port);
