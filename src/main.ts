@@ -16,7 +16,8 @@ import { IMessage } from './interfaces/message.interface';
 
 config();
 const port = parseInt(process.env.PORT, 10) || 3000;
-const logLevel = parseInt(process.env.LOG_LEVEL, 10) || 2;
+const logLevel =
+  process.env.LOG_LEVEL !== undefined ? parseInt(process.env.LOG_LEVEL, 10) : 2;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
